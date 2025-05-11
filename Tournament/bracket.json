@@ -1,0 +1,22 @@
+{
+    "left": {
+        "left": null,
+        "p1": "a",
+        "p2": "f",
+        "right": null,
+        "round": 1,
+        "winner": "a"
+    },
+    "p1": "a",
+    "p2": "s",
+    "right": {
+        "left": null,
+        "p1": "s",
+        "p2": "d",
+        "right": null,
+        "round": 1,
+        "winner": "s"
+    },
+    "round": 2,
+    "winner": "a"
+}
