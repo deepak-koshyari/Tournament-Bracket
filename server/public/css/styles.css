@@ -1,0 +1,220 @@
+/* Base Styles */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2c3e50;
+  --background-color: #f5f7fa;
+  --card-color: #fff;
+  --text-color: #333;
+  --border-color: #ddd;
+  --winner-color: #27ae60;
+  --animation-duration: 0.3s;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+header, footer {
+  background-color: var(--secondary-color);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Controls */
+.controls {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color var(--animation-duration);
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+/* Bracket Container */
+#bracket-container {
+  position: relative;
+  background-color: var(--card-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  overflow-x: auto;
+}
+
+#loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Bracket Layout */
+#bracket {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.round {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+}
+
+.round-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+
+/* Match Styles */
+.match {
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform var(--animation-duration), box-shadow var(--animation-duration);
+  position: relative;
+  opacity: 0;
+  animation: fadeIn var(--animation-duration) forwards;
+}
+
+.match:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.match-header {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.match-content {
+  padding: 1rem;
+}
+
+.player {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.vs {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+  margin: 0.5rem 0;
+}
+
+.match-footer {
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+}
+
+.winner {
+  font-weight: bold;
+  color: var(--winner-color);
+}
+
+/* Connection Lines (using pseudo-elements) */
+.match::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -2rem;
+  width: 2rem;
+  height: 2px;
+  background-color: var(--border-color);
+  display: none;
+}
+
+.round:not(:last-child) .match::after {
+  display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #bracket {
+    grid-template-columns: 1fr;
+  }
+  
+  .round {
+    margin-bottom: 2rem;
+  }
+  
+  .match::after {
+    display: none;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.match-enter {
+  animation: fadeIn var(--animation-duration) forwards;
+  animation-delay: calc(var(--animation-duration) * var(--index, 0));
+}

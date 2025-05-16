@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tournament Bracket Viewer</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>Tournament Bracket Viewer</h1>
+  </header>
+  
+  <main>
+    <div class="controls">
+      <button id="refresh-btn" class="btn">
+        <i class="fas fa-sync-alt"></i> Refresh Bracket
+      </button>
+    </div>
+    
+    <div id="bracket-container">
+      <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading bracket...</p>
+      </div>
+      <div id="bracket"></div>
+    </div>
+  </main>
+  
+  <footer>
+    <p>Tournament Bracket Viewer &copy; 2025</p>
+  </footer>
+
+  <!-- Templates -->
+  <template id="match-template">
+    <div class="match">
+      <div class="match-header">Round <span class="round-number"></span></div>
+      <div class="match-content">
+        <div class="player player1"></div>
+        <div class="vs">vs</div>
+        <div class="player player2"></div>
+      </div>
+      <div class="match-footer">
+        Winner: <span class="winner"></span>
+      </div>
+    </div>
+  </template>
+
+  <script src="js/bracket.js"></script>
+</body>
+</html>
