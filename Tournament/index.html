@@ -1,51 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Tournament Bracket</title>
-  <style>
-    body {
-      font-family: Arial;
-    }
-    .match {
-      border: 1px solid #000;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 5px;
-    }
-    .round {
-      margin-left: 40px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tournament Bracket Viewer</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Single Elimination Bracket</h1>
+  <h1>Tournament Bracket</h1>
   <div id="bracket"></div>
-
-  <script>
-    async function fetchBracket() {
-      const response = await fetch('bracket.json');
-      const data = await response.json();
-      renderBracket(data, document.getElementById('bracket'));
-    }
-
-    function renderBracket(node, container) {
-      if (!node) return;
-
-      const matchDiv = document.createElement('div');
-      matchDiv.className = 'match';
-      matchDiv.innerText = `${node.p1} vs ${node.p2} → Winner: ${node.winner} (Round ${node.round})`;
-      container.appendChild(matchDiv);
-
-      if (node.left || node.right) {
-        const roundDiv = document.createElement('div');
-        roundDiv.className = 'round';
-        container.appendChild(roundDiv);
-        renderBracket(node.left, roundDiv);
-        renderBracket(node.right, roundDiv);
-      }
-    }
-
-    fetchBracket();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

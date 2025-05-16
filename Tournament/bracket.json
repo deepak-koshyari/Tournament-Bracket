@@ -2,20 +2,20 @@
     "left": {
         "left": null,
         "p1": "a",
-        "p2": "f",
+        "p2": "d",
         "right": null,
         "round": 1,
         "winner": "a"
     },
     "p1": "a",
-    "p2": "s",
+    "p2": "b",
     "right": {
         "left": null,
-        "p1": "s",
-        "p2": "d",
+        "p1": "b",
+        "p2": "c",
         "right": null,
         "round": 1,
-        "winner": "s"
+        "winner": "b"
     },
     "round": 2,
     "winner": "a"
