@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Tournament Bracket Viewer
 
 A modern, interactive web application for viewing and managing tournament brackets.
@@ -43,3 +44,6 @@ http://localhost:3000
     - `js/bracket.js` - Interactive bracket viewer
     - `index.html` - Main HTML page
   - `server.js` - Express server with API endpoints
+=======
+# Tournament-Bracket
+>>>>>>> b14ffc9814ce5a860035d5d0345f6b91c4a75a66
