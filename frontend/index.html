@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tournament Bracket Viewer</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Bracket Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Tournament Bracket</h1>
-  <div id="bracket"></div>
-  <script src="script.js"></script>
+    <div class="container">
+        <h1>Tournament Bracket Generator</h1>
+        
+        <div class="controls">
+            <div class="input-area">
+                <label for="playerNames">Enter Player Names (one per line):</label>
+                <textarea id="playerNames" rows="4" placeholder="Enter player names here..."></textarea>
+            </div>
+            <button id="generateButton" class="btn">Generate Tournament</button>
+        </div>
+
+        <div class="results">
+            <!-- Tournament Bracket Section -->
+            <div class="section">
+                <h2>Tournament Bracket</h2>
+                <div id="bracket" class="bracket-section"></div>
+            </div>
+
+            <!-- Maze Performance Section -->
+            <div class="section">
+                <h2>Maze Performance</h2>
+                <div id="mazeResults" class="maze-section"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

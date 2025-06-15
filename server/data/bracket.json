@@ -1,22 +1,11 @@
 {
-    "left": {
-        "left": null,
-        "p1": "a",
-        "p2": "d",
-        "right": null,
-        "round": 1,
-        "winner": "a"
-    },
-    "p1": "a",
-    "p2": "b",
-    "right": {
-        "left": null,
-        "p1": "b",
-        "p2": "c",
-        "right": null,
-        "round": 1,
-        "winner": "b"
-    },
-    "round": 2,
-    "winner": "a"
+  "round1": [
+    {
+      "player1": "p1",
+      "player2": "p2",
+      "winner": null
+    }
+  ],
+  "round2": [],
+  "final": null
 }

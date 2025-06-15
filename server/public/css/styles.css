@@ -218,3 +218,208 @@ main {
   animation: fadeIn var(--animation-duration) forwards;
   animation-delay: calc(var(--animation-duration) * var(--index, 0));
 }
+
+/* Tournament Bracket Generator Interface Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+h2 {
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+}
+
+#mazeVisualization {
+  margin-top: 20px;
+  overflow-x: auto;
+  position: relative;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  position: relative;
+}
+
+td {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s;
+}
+
+.wall {
+  background: #333;
+}
+
+.path {
+  background: white;
+}
+
+.player-path {
+  background: #4CAF50 !important;
+  animation: pathHighlight 0.5s ease-in-out;
+}
+
+.player-final {
+  background: #FFD700 !important;
+  animation: finalHighlight 0.5s ease-in-out;
+}
+
+@keyframes pathHighlight {
+  0% { background-color: white; }
+  50% { background-color: #4CAF50; }
+  100% { background-color: #4CAF50; }
+}
+
+@keyframes finalHighlight {
+  0% { background-color: white; }
+  50% { background-color: #FFD700; }
+  100% { background-color: #FFD700; }
+}
+
+#bracketVisualization {
+  margin-top: 20px;
+}
+
+.bracket {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.round {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.match {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid #eee;
+  margin: 10px 0;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.player {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.vs {
+  color: #666;
+  font-size: 1.2em;
+}
+
+.winner {
+  color: #4CAF50;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#runsHistory {
+  margin-top: 20px;
+}
+
+.run-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border-left: 4px solid #4CAF50;
+}
+
+.run-item h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.run-item p {
+  margin: 5px 0;
+  color: #666;
+}
+
+/* Add some spacing between sections */
+.section:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+/* Add some styling for the winner display */
+.winner {
+  color: #4CAF50;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 4px;
+  margin: 5px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.winner::before {
+  content: '🏆';
+  margin-right: 5px;
+}

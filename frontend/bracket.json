@@ -1,22 +1,22 @@
 {
     "left": {
         "left": null,
-        "p1": "a",
-        "p2": "d",
+        "p1": "depak",
+        "p2": "deopa",
         "right": null,
         "round": 1,
-        "winner": "a"
+        "winner": "depak"
     },
-    "p1": "a",
-    "p2": "b",
+    "p1": "depak",
+    "p2": "kajji",
     "right": {
         "left": null,
-        "p1": "b",
-        "p2": "c",
+        "p1": "kajji",
+        "p2": "shashsnk",
         "right": null,
         "round": 1,
-        "winner": "b"
+        "winner": "kajji"
     },
     "round": 2,
-    "winner": "a"
+    "winner": "depak"
 }

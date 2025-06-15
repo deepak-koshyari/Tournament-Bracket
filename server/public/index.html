@@ -1,52 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tournament Bracket Viewer</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Bracket Generator</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Tournament Bracket Viewer</h1>
-  </header>
-  
-  <main>
-    <div class="controls">
-      <button id="refresh-btn" class="btn">
-        <i class="fas fa-sync-alt"></i> Refresh Bracket
-      </button>
-    </div>
-    
-    <div id="bracket-container">
-      <div id="loading">
-        <div class="spinner"></div>
-        <p>Loading bracket...</p>
-      </div>
-      <div id="bracket"></div>
-    </div>
-  </main>
-  
-  <footer>
-    <p>Tournament Bracket Viewer &copy; 2025</p>
-  </footer>
+    <div class="container">
+        <h1>Tournament Bracket Generator</h1>
+        
+        <!-- Maze Controls -->
+        <div class="section">
+            <h2>Maze Environment</h2>
+            <div class="controls">
+                <button onclick="generateMaze()">Generate New Maze</button>
+                <input type="number" id="mazeSize" value="10" min="5" max="20">
+                <button onclick="runPlayerThroughMaze()">Run Player Through Maze</button>
+                <input type="text" id="playerName" placeholder="Player Name">
+            </div>
+            <div id="mazeVisualization"></div>
+        </div>
 
-  <!-- Templates -->
-  <template id="match-template">
-    <div class="match">
-      <div class="match-header">Round <span class="round-number"></span></div>
-      <div class="match-content">
-        <div class="player player1"></div>
-        <div class="vs">vs</div>
-        <div class="player player2"></div>
-      </div>
-      <div class="match-footer">
-        Winner: <span class="winner"></span>
-      </div>
-    </div>
-  </template>
+        <!-- Player Rankings -->
+        <div class="section">
+            <h2>Player Rankings</h2>
+            <div id="playerRankings"></div>
+        </div>
 
-  <script src="js/bracket.js"></script>
+        <!-- Bracket Controls -->
+        <div class="section">
+            <h2>Tournament Bracket</h2>
+            <div class="controls">
+                <button onclick="generateBracket()">Generate Bracket</button>
+                <input type="text" id="playerInput" placeholder="Enter player names (comma separated)">
+            </div>
+            <div id="bracketVisualization"></div>
+        </div>
+
+        <!-- Maze Runs History -->
+        <div class="section">
+            <h2>Maze Runs History</h2>
+            <div id="runsHistory"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentMaze = null;
+        let currentBracket = null;
+
+        // Maze Visualization
+        function generateMaze() {
+            const size = document.getElementById('mazeSize').value;
+            fetch(`/api/maze/generate?size=${size}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentMaze = data.maze;
+                    displayMaze(data.maze);
+                });
+        }
+
+        function displayMaze(maze) {
+            const container = document.getElementById('mazeVisualization');
+            container.innerHTML = '';
+            
+            const table = document.createElement('table');
+            maze.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.className = cell === -1 ? 'wall' : 'path';
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+            container.appendChild(table);
+        }
+
+        // Player Maze Run
+        function runPlayerThroughMaze() {
+            const playerName = document.getElementById('playerName').value;
+            if (!playerName) {
+                alert('Please enter a player name');
+                return;
+            }
+
+            if (!currentMaze) {
+                alert('Please generate a maze first');
+                return;
+            }
+
+            fetch('/api/maze/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    playerName,
+                    maze: currentMaze
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                updateRunsHistory(data);
+                highlightPlayerPath(data.path);
+                updatePlayerRankings();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error running player through maze');
+            });
+        }
+
+        function highlightPlayerPath(path) {
+            const maze = document.getElementById('mazeVisualization').querySelector('table');
+            if (!maze) return;
+
+            // Clear previous highlights
+            const cells = maze.getElementsByTagName('td');
+            for (const cell of cells) {
+                cell.classList.remove('player-path');
+            }
+
+            // Highlight the path
+            path.forEach(step => {
+                const fromCell = maze.rows[step.from.y].cells[step.from.x];
+                const toCell = maze.rows[step.to.y].cells[step.to.x];
+                
+                if (fromCell) fromCell.classList.add('player-path');
+                if (toCell) toCell.classList.add('player-path');
+            });
+
+            // Highlight final position
+            const finalCell = maze.rows[path[path.length-1].to.y].cells[path[path.length-1].to.x];
+            if (finalCell) finalCell.classList.add('player-final');
+        }
+
+        function updateRunsHistory(runData) {
+            const runs = document.getElementById('runsHistory');
+            const runDiv = document.createElement('div');
+            runDiv.className = 'run-item';
+            runDiv.innerHTML = `
+                <h3>${runData.playerName}</h3>
+                <p>Total Reward: ${runData.totalReward}</p>
+                <p>Steps Taken: ${runData.stepsTaken}</p>
+                <p>Maze Completed: ${runData.completed ? 'Yes' : 'No'}</p>
+                <p>Time: ${new Date(runData.timestamp).toLocaleString()}</p>
+            `;
+            runs.insertBefore(runDiv, runs.firstChild);
+        }
+
+        function updatePlayerRankings() {
+            fetch('/api/maze/rankings')
+                .then(response => response.json())
+                .then(rankings => {
+                    const rankingsDiv = document.getElementById('playerRankings');
+                    rankingsDiv.innerHTML = '';
+                    
+                    const table = document.createElement('table');
+                    const thead = document.createElement('thead');
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Steps</th>
+                    `;
+                    thead.appendChild(tr);
+                    table.appendChild(thead);
+
+                    const tbody = document.createElement('tbody');
+                    rankings.forEach((ranking, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${ranking.playerName}</td>
+                            <td>${ranking.totalReward}</td>
+                            <td>${ranking.stepsTaken}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    table.appendChild(tbody);
+                    rankingsDiv.appendChild(table);
+                });
+        }
+
+        // Bracket Generation
+        function generateBracket() {
+            const players = document.getElementById('playerInput').value;
+            if (!players) {
+                alert('Please enter player names');
+                return;
+            }
+
+            fetch('/api/bracket', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    players: players.split(',').map(p => p.trim())
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                currentBracket = data;
+                displayBracket(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error generating bracket');
+            });
+        }
+
+        function displayBracket(bracket) {
+            const container = document.getElementById('bracketVisualization');
+            container.innerHTML = '';
+            
+            const bracketDiv = document.createElement('div');
+            bracketDiv.className = 'bracket';
+
+            // Display each round
+            bracket.rounds.forEach((round, roundIndex) => {
+                const roundDiv = document.createElement('div');
+                roundDiv.className = 'round';
+                roundDiv.innerHTML = `<h3>Round ${roundIndex + 1}</h3>`;
+
+                round.forEach(match => {
+                    const matchDiv = document.createElement('div');
+                    matchDiv.className = 'match';
+                    
+                    // Get player stats
+                    const player1Stats = match.player1Stats;
+                    const player2Stats = match.player2Stats;
+                    
+                    // Determine match result
+                    let resultText = 'Not decided';
+                    if (match.winner) {
+                        if (match.winner === match.player1) {
+                            resultText = `🏆 ${match.player1} wins`;
+                        } else if (match.winner === match.player2) {
+                            resultText = `🏆 ${match.player2} wins`;
+                        } else {
+                            resultText = 'TIE';
+                        }
+                    }
+
+                    matchDiv.innerHTML = `
+                        <div class="player-stats">
+                            <div class="player-name">${match.player1}</div>
+                            <div class="player-score">Score: ${player1Stats.totalReward}</div>
+                            <div class="player-steps">Steps: ${player1Stats.stepsTaken}</div>
+                        </div>
+                        <div class="vs">vs</div>
+                        <div class="player-stats">
+                            <div class="player-name">${match.player2}</div>
+                            <div class="player-score">Score: ${player2Stats.totalReward}</div>
+                            <div class="player-steps">Steps: ${player2Stats.stepsTaken}</div>
+                        </div>
+                        <div class="match-result">${resultText}</div>
+                    `;
+                    roundDiv.appendChild(matchDiv);
+                });
+                bracketDiv.appendChild(roundDiv);
+            });
+
+            container.appendChild(bracketDiv);
+        }
+
+        // Initialize
+        generateMaze(); // Generate initial maze
+        updatePlayerRankings(); // Show initial rankings
+    </script>
 </body>
 </html>
