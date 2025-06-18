@@ -1,0 +1,48 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-o",
+                "build/auto_update.exe",
+                "backend/auto_update.cpp",
+                "-std=c++17",
+                "-lws2_32"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "build api",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-o",
+                "build/api_server.exe",
+                "backend/api_server.cpp",
+                "backend/maze_environment.cpp",
+                "backend/bracket_generator.cpp",
+                "-std=c++17",
+                "-lws2_32"
+            ],
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "run auto-update",
+            "type": "shell",
+            "command": "start",
+            "args": ["build/auto_update.exe"],
+            "problemMatcher": []
+        }
+    ],
+    "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+    }
+}
