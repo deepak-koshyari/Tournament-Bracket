@@ -2,11 +2,13 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #fff;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f5f5f5;
+    /* Dark, colorful gradient background */
+    background: linear-gradient(135deg, #232526 0%, #414345 50%, #283e51 100%);
+    min-height: 100vh;
 }
 
 h1, h2, h3 {
@@ -96,14 +98,23 @@ h1, h2, h3 {
 }
 
 /* Bracket Styles */
+.bracket-section {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border: 2px solid #2a5298;
+    box-shadow: 0 4px 24px rgba(30, 60, 114, 0.15);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
 .bracket-container {
-    display: flex;
-    overflow-x: auto;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(30, 60, 114, 0.10);
     padding: 20px 0;
     margin-top: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow-x: auto;
 }
 
 .round {
@@ -168,6 +179,16 @@ h1, h2, h3 {
 .player.empty {
     color: #95a5a6;
     font-style: italic;
+}
+
+.player:not(.winner):not(.bye) {
+    color: #111 !important;
+    text-shadow: 0 1px 4px rgba(255,255,255,0.15);
+}
+
+.player.bye {
+    color: #111 !important;
+    text-shadow: 0 1px 4px rgba(255,255,255,0.15);
 }
 
 .tournament-winner {
@@ -331,4 +352,70 @@ h1, h2, h3 {
 
 .player {
     transition: all 0.3s ease-in-out;
+}
+
+.header-box {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    padding: 32px 0 24px 0;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(30, 60, 114, 0.2);
+    margin-bottom: 32px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.header-box h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.container, .input-section, .maze-section, .bracket-section {
+    color: #fff;
+}
+
+.input-section, .maze-section, .bracket-section {
+    background: rgba(44, 62, 80, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+input, textarea {
+    background: #232526;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #bbb;
+}
+
+button {
+    background: #2a5298;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #1e3c72;
+}
+
+.section, .maze-section, .bracket-section {
+    color: #fff;
+}
+
+label, .instructions, h2, h3, th, td, .player, .match, .tournament-winner {
+    color: #fff !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }

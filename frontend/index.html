@@ -10,7 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>Tournament Bracket Generator</h1>
+        <div class="header-box">
+            <h1>Tournament Bracket Generator</h1>
+        </div>
         
         <div class="input-section">
             <h2>Enter Player Names</h2>
@@ -19,7 +21,7 @@
             <div class="input-wrapper">
                 <textarea 
                     id="playerNames" 
-                    placeholder="Player 1&#10;Player 2&#10;Player 3&#10;..."
+                    placeholder="Player 1&#10;Player 2&#10;Player 3&#10;"
                     rows="6"
                     aria-label="Player names"
                 ></textarea>
@@ -50,15 +52,6 @@
     <div id="loadingOverlay" class="overlay">
         <div class="spinner"></div>
         <p>Generating tournament...</p>
-    </div>
-
-    <!-- Error Toast -->
-    <div id="errorToast" class="toast error-toast">
-        <div class="toast-content">
-            <i class="fas fa-exclamation-circle"></i>
-            <span id="errorMessage">An error occurred</span>
-        </div>
-        <button class="toast-close">&times;</button>
     </div>
 
     <script src="script.js"></script>

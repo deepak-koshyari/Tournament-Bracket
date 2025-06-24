@@ -48,15 +48,15 @@ public:
 
     int getReward(Position pos) {
         if (pos.x < 0 || pos.x >= MAZE_SIZE || pos.y < 0 || pos.y >= MAZE_SIZE) {
-            return -10; // Out of bounds
+            return -10; // Out of bounds hamra total size 10hai to 
         }
         if (maze[pos.x][pos.y] == -1) {
-            return -5; // Wall
+            return -5; // Wall hai
         }
         if (pos.x == MAZE_SIZE-1 && pos.y == MAZE_SIZE-1) {
-            return MAX_REWARD; // Goal
+            return MAX_REWARD; // Goal destination hai
         }
-        return 1; // Normal step
+        return 1; // Normal step hai
     }
 
     bool isValidMove(Position pos, Direction dir) {
